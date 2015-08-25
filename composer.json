@@ -1,14 +1,24 @@
 {
     "name": "webplumbr/elastic-blog",
     "description": "ElasticSearch powered Blog bundle for Symfony 2 based Projects",
+    "keywords": ["elasticsearch", "wordpress", "blog", "symfony 2", "markdown"],
     "license": "MIT",
+    "type": "library",
+    "authors": [
+      {
+        "name": "Prasanna T K Subramanian",
+        "email": "prasanna@webplumbr.com",
+        "homepage": "http://webplumbr.com/about"
+      }
+    ],
     "autoload": {
         "psr-0": { "": "src/" }
     },
     "require": {
         "php": ">=5.5",
         "symfony/symfony": "2.*",
-        "webplumbr/elastic-blog": "dev-master"
+        "elasticsearch/elasticsearch": "~2.0@beta",
+        "erusev/parsedown": "1.5.3"
     },
     "repositories": [
         {
