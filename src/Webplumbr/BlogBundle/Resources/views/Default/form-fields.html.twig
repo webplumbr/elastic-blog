@@ -1,0 +1,60 @@
+{% block email_widget %}
+    {{  block('form_widget_simple') }}
+{%  endblock %}
+
+{% block  text_widget %}
+    {{  block('form_widget_simple') }}
+{%  endblock %}
+
+{% block  hidden_widget %}
+    <input type="hidden" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
+{%  endblock %}
+
+{% block textarea_widget %}
+    <textarea class="form-control" {{ block('widget_attributes') }}>{{ value }}</textarea>
+{%  endblock %}
+
+{% block choice_widget %}
+    {% spaceless %}
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} class="form-control">
+            {% if empty_value is not none %}
+                <option value="">{{ empty_value|trans({}, translation_domain) }}</option>
+            {% endif %}
+            {% set options = choices %}
+            {{ block('choice_options') }}
+        </select>
+    {% endspaceless %}
+{% endblock choice_widget %}
+
+{% block choice_options %}
+    {% spaceless %}
+        {% for group_label, choice in options %}
+            {# here you can access choice #}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|trans({}, translation_domain) }}</option>
+        {% endfor %}
+    {% endspaceless %}
+{% endblock choice_options %}
+
+{% block button_widget %}
+    <button class="btn btn btn-primary btn-block" type="{{ type }}">
+        {% if label is not empty %} {{ label }} {% endif %}
+    </button>
+{% endblock %}
+
+{% block form_widget_simple %}
+    {% if errors|length > 0 %}
+        <div class="form-group has-error has-feedback">
+            {% for error in errors %}
+            <label class="control-label" for="{{ id }}">{{ error.message }}</label>
+            {% endfor %}
+            <input class="form-control" {{ block('widget_attributes') }} aria-describedby="error_{{ id }}"/>
+            <span id="error_{{ id }}" class="sr-only">(error)</span>
+        </div>
+    {% else %}
+        <input class="form-control" {{ block('widget_attributes') }} {% if value is not empty %} value="{{ value }}" {% endif %}/>
+    {% endif %}
+{%  endblock %}
+
+{% block form_errors %}
+    {# intentionally left blank #}
+{% endblock form_errors %}

@@ -1,0 +1,37 @@
+{% extends 'WebplumbrBlogBundle:Admin:admin.html.twig' %}
+
+{% block page_title %}Posts{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert-success alert">{{ message }}</div>
+    {% endfor %}
+    {% if posts.total is defined %}
+        <div class="alert-info alert">There are {{ posts.total }} Posts</div>
+    {% endif %}
+    <div>
+        <a href="{{ url('new_post') }}" class="btn btn-primary">Add new Post</a>
+    </div>
+    {% for post in posts.posts %}
+        <h4>
+            <span class="label label-info">{{ post.status }}</span>&nbsp;
+            <a href="{{ path('archives', {postId: post.post_id}) }}" target="_blank" class="btn btn-link">{{ post.title }}</a>
+        </h4>
+        <p>{{ post.content|truncate }}&nbsp;
+            <a href="{{ path('edit_posts', {'id' : post.post_id }) }}" class="btn btn-link">Edit</a>
+        </p>
+    {% endfor %}
+
+    {% if prev_uri is defined or next_uri is defined %}
+        <nav>
+            <ul class="pager">
+                {% if prev_uri is defined %}
+                    <li><a href="{{ prev_uri }}">Previous</a></li>
+                {% endif %}
+                {% if next_uri is defined %}
+                    <li><a href="{{ next_uri }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

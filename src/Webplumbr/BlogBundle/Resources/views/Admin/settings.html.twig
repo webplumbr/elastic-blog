@@ -1,0 +1,15 @@
+{% extends 'WebplumbrBlogBundle:Admin:admin.html.twig' %}
+
+{% block page_title %}Edit Blog Settings{% endblock %}
+
+{% form_theme form 'WebplumbrBlogBundle:Default:form-fields.html.twig' %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert-success alert">{{ message }}</div>
+    {% endfor %}
+    {{ form_errors(form) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <services>
+        <service id="webplumbr_blog.example" class="Webplumbr\BlogBundle\Example">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+    <parameters>
+        <parameter key="elasticUserProvider.class">Webplumbr\BlogBundle\Security\User\ElasticUserProvider</parameter>
+        <parameter key="hasher.class">Webplumbr\BlogBundle\Lib\Hasher</parameter>
+        <parameter key="connectionPool.class">\Elasticsearch\ConnectionPool\StaticNoPingConnectionPool</parameter>
+        <parameter key="elasticsearch.class">Webplumbr\BlogBundle\Lib\ElasticSearch</parameter>
+        <parameter key="helper.class">Webplumbr\BlogBundle\Lib\Helper</parameter>
+        <parameter key="kernelRequestListener.class">Webplumbr\BlogBundle\EventListener\KernelRequestListener</parameter>
+        <parameter key="kernelExceptionListener.class">Webplumbr\BlogBundle\EventListener\KernelExceptionListener</parameter>
+    </parameters>
+    <services>
+        <service id="app.twig_extension"
+                 class="Webplumbr\BlogBundle\Twig\TruncateExtension"
+                 public="false">
+            <tag name="twig.extension" />
+        </service>
+        <service id="elasticsearch" class="%elasticsearch.class%">
+            <argument type="collection">
+                <argument key="host">%elastic_host%</argument>
+                <argument key="port">%elastic_port%</argument>
+                <argument key="connectionPoolClass">%connectionPool.class%</argument>
+            </argument>
+            <call method="setIndex">
+                <argument>%elastic_index%</argument>
+            </call>
+            <call method="setHasher">
+                <argument type="service" id="blog_hasher"></argument>
+            </call>
+        </service>
+        <service id="blog_hasher" class="%hasher.class%">
+            <argument>%secret%</argument>
+            <argument>%default_user_password%</argument>
+        </service>
+        <service id="blog_helper" class="%helper.class%">
+            <call method="setHasher">
+                <argument type="service" id="blog_hasher"></argument>
+            </call>
+        </service>
+        <service id="request_listener" class="%kernelRequestListener.class%">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"></tag>
+            <argument type="service" id="service_container"></argument>
+        </service>
+        <service id="exception_listener" class="%kernelExceptionListener.class%">
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"></tag>
+        </service>
+        <service id="elastic_user_provider" class="%elasticUserProvider.class%">
+            <argument type="service" id="elasticsearch"></argument>
+        </service>
+    </services>
+</container>

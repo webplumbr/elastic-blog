@@ -1,0 +1,39 @@
+{% extends 'WebplumbrBlogBundle:Admin:admin.html.twig' %}
+
+{% block page_title %}Tags{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert-success alert">{{ message }}</div>
+    {% endfor %}
+    <form action="{{ url('modify_tags') }}" method="post">
+        <input type="text" name="new_tag_name" id="query_tag_name" class="form-control" placeholder="Search Tags...">
+        <input type="hidden" name="old_tag_name" id="old_tag_name" value=""/>
+        <div class="showOptions sr-only">
+            <button type="submit" name="op_type" value="rename" class="btn btn-primary">Rename Tag</button>
+            <button type="submit" name="op_type" value="delete" class="btn btn-danger">Delete Tag</button>
+            <button type="submit" name="op_type" value="fetch" class="btn btn-info">Fetch all associated Posts</button>
+            <button type="submit" name="op_type" value="publish" class="btn btn-primary">Publish all associated Posts</button>
+            <button type="submit" name="op_type" value="unpublish" class="btn btn-warning">Unpublish all associated Posts</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('#query_tag_name').autocomplete({
+                source: "{{ url('autocomplete_tags') }}",
+                minLength: 2,
+                select: function (event, ui) {
+                    if (ui.item.value) {
+                        //if the user selected a listed tag then show available options to be performed
+                        $('.showOptions').removeClass('sr-only');
+                        $('#old_tag_name').val(ui.item.value);
+                        $(this).attr('autocomplete', 'off');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

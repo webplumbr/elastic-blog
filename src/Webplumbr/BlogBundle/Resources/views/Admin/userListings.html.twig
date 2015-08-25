@@ -1,0 +1,48 @@
+{% extends 'WebplumbrBlogBundle:Admin:admin.html.twig' %}
+
+{% block page_title %}Users{% endblock %}
+
+{% block body %}
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert-success alert">{{ message }}</div>
+    {% endfor %}
+    {% if users.total is defined %}
+        <div class="alert-info alert">There are {{ users.total }} Users</div>
+    {% endif %}
+    <div>
+        <a href="{{ url('new_user') }}" class="btn btn-primary">Add new User</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>User name</th>
+            <th>Display name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users.users %}
+        <tr>
+            <td><a href="{{ path('edit_user', {'id' : user.user_id }) }}" class="btn btn-link">{{ user.user_name }}</a></td>
+            <td>{{ user.display_name }}</td>
+            <td>{{ user.email }}</td>
+            <td><span class="label label-info">{{ user.status }}</span></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if prev_uri is defined or next_uri is defined %}
+        <nav>
+            <ul class="pager">
+                {% if prev_uri is defined %}
+                    <li><a href="{{ prev_uri }}">Previous</a></li>
+                {% endif %}
+                {% if next_uri is defined %}
+                    <li><a href="{{ next_uri }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

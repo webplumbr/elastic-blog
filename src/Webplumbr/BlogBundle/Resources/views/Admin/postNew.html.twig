@@ -1,0 +1,12 @@
+{% extends 'WebplumbrBlogBundle:Admin:admin.html.twig' %}
+
+{% block page_title %}Add a new Post{% endblock %}
+
+{% form_theme form 'WebplumbrBlogBundle:Default:form-fields.html.twig' %}
+
+{% block body %}
+    {{ form_errors(form) }}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

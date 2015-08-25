@@ -1,0 +1,37 @@
+{% extends 'WebplumbrBlogBundle:Default:blog.html.twig' %}
+
+{% block body %}
+    <div class="col-sm-8 blog-main">
+
+        {% if posts %}
+            {% for post in posts.posts %}
+                <div class="blog-post">
+                    <h3 class="blog-post-title">{{ post.title }}</h3>
+                    <p class="blog-post-meta">{{ post.post_date }}</p>
+                    {{ post.content|truncate|raw }}&nbsp;<a href="{{ path('archives', {postId: post.post_id}) }}">more...</a>
+                    {% if post.tags %}
+                        <p>
+                            {% for tag in post.tags %}
+                                <a href="{{ path('post_by_tag', {name: tag, page: 1}) }}">{{ tag }}</a>&nbsp;
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {%  endif %}
+
+        {% if prev_uri is defined or next_uri is defined %}
+            <nav>
+                <ul class="pager">
+                    {% if prev_uri is defined %}
+                        <li><a href="{{ prev_uri }}">Previous</a></li>
+                    {% endif %}
+                    {% if next_uri is defined %}
+                        <li><a href="{{ next_uri }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+
+    </div><!-- /.blog-main -->
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'WebplumbrBlogBundle:Admin:admin.html.twig' %}
+
+{% block page_title %}Import Wordpress Blog{% endblock %}
+
+{% block body %}
+    {% for warning in warnings %}
+        <div class="alert alert-warning" role="alert">{{ warning }}</div>
+    {% endfor %}
+    {% for notice in notices %}
+        <div class="alert alert-success" role="alert">{{ notice }}</div>
+    {% endfor %}
+    {% if (app.request.method == 'GET') %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Caution!</strong> Imported data will replace any existing data
+    </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="filename">Upload your Wordpress XML file</label>
+            <div class="form-control">
+                <input type="file" id="filename" name="filename"/>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Import</button>
+    </form>
+{% endblock %}

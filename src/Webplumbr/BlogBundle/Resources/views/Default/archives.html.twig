@@ -1,0 +1,79 @@
+{% extends 'WebplumbrBlogBundle:Default:blog.html.twig' %}
+
+{% form_theme form 'WebplumbrBlogBundle:Default:form-fields.html.twig' %}
+
+{% block stylesheets %}
+    <style type="text/css">
+        .comments-header {
+            border-bottom: 1px #EEE solid;
+            padding: 10px 0 10px 0;
+        }
+        .comment-form {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="col-sm-8 blog-main">
+
+        {% for message in app.session.flashbag.get('notice') %}
+            <div class="alert-success alert">{{ message }}</div>
+        {% endfor %}
+
+        {% if post %}
+        <div class="blog-post">
+            <!-- blog post -->
+            <h3 class="blog-post-title">{{ post.title }}</h3>
+            <p class="blog-post-meta">{{ post.post_date }}</p>
+            {{ post.content|raw }}
+
+            <!-- associated tags -->
+            {% if post.tags %}
+                <p>
+                    <strong>Tags:</strong>&nbsp;
+                    {% for tag in post.tags %}
+                        <a href="{{ path('post_by_tag', {name: tag, page: 1}) }}">{{ tag }}</a>&nbsp;
+                    {% endfor %}
+                </p>
+            {% endif %}
+
+            <!-- related posts -->
+            {% if related.total > 0 %}
+                <h3 class="comments-header">Posts that might be of interest</h3>
+                {% for post in related.posts %}
+                <p><a href="{{ path('archives', {postId: post.post_id}) }}">{{ post.title }}</a></p>
+                {% endfor %}
+            {% endif %}
+
+            <h3 class="comments-header">Comments</h3>
+            {% if post.comment_status == 'open' %}
+            <div class="comment-form">
+                <!-- begin comment form -->
+                {{ form_errors(form) }}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+                <!-- end comment form -->
+            </div>
+            {% endif %}
+
+            <!-- published comments -->
+            {% if comments.total > 0 %}
+                <p class="lead"><strong>Disclaimer:</strong>Published comments reflect the opinion of the Commenter.</p>
+                <p class="alert-info alert">Showing {{ comments.comments|length }} most recent comments out of a total of {{ comments.total }} published ones.</p>
+                {% for i, comment in comments.comments %}
+                    <div>
+                        <blockquote {% if i%2 == 0 %}class="blockquote-reverse"{% endif %}>
+                            {{ comment.content|raw }}
+                            <footer>{{ comment.commenter }} said <cite>{{ comment.comment_date }}</cite></footer>
+                        </blockquote>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {%  endif %}
+
+    </div><!-- /.blog-main -->
+{% endblock %}
