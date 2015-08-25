@@ -11,6 +11,7 @@
         "homepage": "http://webplumbr.com/about"
       }
     ],
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "": "src/" }
     },
