@@ -9,10 +9,6 @@
 
 ```
 require {
-  //dependencies
-  "elasticsearch/elasticsearch": "~2.0@beta",
-  "erusev/parsedown": "1.5.3",
-  //elastic search powered blog bundle
   "webplumbr/elastic-blog": "dev-master"
 }
 ```
