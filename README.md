@@ -113,12 +113,26 @@ security:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
 ```
+**NOTE** The default super admin uses the following credentials:
 
 **Step 8.** Dump all newly installed assets
 ```
 app/console assetic:dump
 app/console assets:install --symlink
 ```
+
+**Step 9.** You can then visit the following link and login using the default super admin user credentials:
+
+username: superman
+password: !underwear!
+
+Login page: http://your-project-domain/admin/login
+
+If you are on a local development box: http://your-project-name/app_dev.php/admin/login
+
+**Step 10.** Import your Wordpress XML by visiting the "Import Wordpress Blog" link after logging in to the Admin area.
+
+If everything goes well, you should see your wordpress blog posts, tags, comments and users successfully migrated to the ElasticSearch powered blog platform.
 
 ## FAQ
 If you have any issues, make sure you have checked the following:
