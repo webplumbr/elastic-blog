@@ -143,3 +143,5 @@ If you have any issues, make sure you have checked the following:
 2. Does Symfony 2 have required permissions to write to app/cache and/or app/logs folders?
 3. Have you cleared Symfony 2 cache folder?
 4. Have other installation dependencies outside of this bundle been met with?
+5. If you get "no matching package found" error when using _composer_ _update_, then change your Project root level _composer.json_ 's minimum stability to "dev"
+
