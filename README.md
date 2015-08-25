@@ -26,10 +26,10 @@ require {
 ]
 ```
 
-**Step 2.** Run the following
+**Step 2.** Run the following to install the bundle and its dependent packages
 
 ```
-composer update webplumbr/elastic-blog
+composer update
 ```
 
 **Step 3.** Register the bundle with your _app/AppKernel.php_ file
@@ -56,6 +56,12 @@ assetic:
     # this is used as the default password for all users that you might
     # import using your existing Wordpress Blog XML
     default_user_password: '!letmein!'
+```
+
+Run the following to grab the above parameters
+
+```
+composer install
 ```
 
 **Step 6.** Add the following to _app/config/routing.yml_ file
