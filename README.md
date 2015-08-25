@@ -2,7 +2,7 @@
 
 ## Requirements
 1. PHP version 5.5 or above
-2. ElasticSearch version 1.7.1 or above (have checked with earlier versions i.e. > 1.0)
+2. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version 1.7.1 or above (have checked with earlier versions i.e. > 1.0)
 
 
 **Step 1.** Add the following package to your _composer.json_
@@ -118,7 +118,6 @@ security:
         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
 ```
-**NOTE** The default super admin uses the following credentials:
 
 **Step 8.** Dump all newly installed assets
 ```
@@ -128,12 +127,14 @@ app/console assets:install --symlink
 
 **Step 9.** You can then visit the following link and login using the default super admin user credentials:
 
+```
 username: superman
 password: !underwear!
+```
 
-Login page: http://your-project-domain/admin/login
+[Login page](http://your-project-domain/admin/login)
 
-If you are on a local development box: http://your-project-name/app_dev.php/admin/login
+[Local development box](http://your-project-name/app_dev.php/admin/login)
 
 **Step 10.** Import your Wordpress XML by visiting the "Import Wordpress Blog" link after logging in to the Admin area.
 
