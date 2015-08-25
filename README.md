@@ -1,5 +1,10 @@
 # Elasticsearch powered blog bundle for Symfony 2 Projects
 
+## Requirements
+1. PHP version 5.5 or above
+2. ElasticSearch version 1.7.1 or above (have checked with earlier versions i.e. > 1.0)
+
+
 **Step 1.** Add the following package to your _composer.json_
 
 ```
