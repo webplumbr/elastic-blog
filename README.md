@@ -1,5 +1,16 @@
 # Elasticsearch powered blog bundle for Symfony 2 Projects
 
+If you are thinking of migrating your Wordpress blog or even starting a blogging platform to something that
+uses No-SQL, then give this bundle a try. It uses ElasticSearch for full-text search capabilities and stores your
+blog posts and associated users, tags, comments as JSON documents within ElasticSearch.
+
+Before you jump in, please read the following:
+
+## To do
+1. Ability to grab associated media assets (video/image/attachments) from your Wordpress XML and save them locally (what this means:
+you won't be able to migrate your media assets yet to this platform)
+2. Presently does not preserve your Wordpress categories and pages (what this means: your wordpress categories and pages won't be imported)
+
 ## Requirements
 1. PHP version 5.5 or above
 2. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version >= 1.0
@@ -144,4 +155,3 @@ If you have any issues, make sure you have checked the following:
 3. Have you cleared Symfony 2 cache folder?
 4. Have other installation dependencies outside of this bundle been met with?
 5. If you get "no matching package found" error when using _composer_ _update_, then change your Project root level _composer.json_ 's minimum stability to "dev"
-
