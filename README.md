@@ -2,8 +2,7 @@
 
 ## Requirements
 1. PHP version 5.5 or above
-2. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version 1.7.1 or above (have checked with earlier versions i.e. > 1.0)
-
+2. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version >= 1.0
 
 **Step 1.** Add the following package to your _composer.json_
 
@@ -13,16 +12,7 @@ require {
 }
 ```
 
-```
-"repositories": [
-  {
-    "type": "vcs",
-    "url": "git@github.com:webplumbr/elastic-blog.git"
-  }
-]
-```
-
-**Step 2.** Run the following to install the bundle and its dependent packages
+**Step 2.** Run the following to install the package and its dependencies
 
 ```
 composer update
@@ -149,6 +139,7 @@ If everything goes well, you should see your wordpress blog posts, tags, comment
 ## FAQ
 If you have any issues, make sure you have checked the following:
 
-1. Is Elasticsearch installed and running as a service
-2. Is the error related to Symfony 2 not being able to write to app/cache and/or app/logs folder? Then, clear the cache and logs folder and make sure the web browser user has appropriate rights to write cache and log files
-
+1. Is Elasticsearch installed and running as a service?
+2. Does Symfony 2 have required permissions to write to app/cache and/or app/logs folders?
+3. Have you cleared Symfony 2 cache folder?
+4. Have other installation dependencies outside of this bundle been met with?

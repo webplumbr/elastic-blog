@@ -11,17 +11,14 @@
         "homepage": "http://webplumbr.com/about"
       }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "": "src/" }
-    },
-    "require-dev": {
-      "elasticsearch/elasticsearch": "~2.0@beta"
     },
     "require": {
         "php": ">=5.5",
         "symfony/symfony": "2.*",
-        "erusev/parsedown": "1.5.3"
+        "erusev/parsedown": "1.5.3",
+        "elasticsearch/elasticsearch": "~2.0@beta"
     },
     "repositories": [
         {
