@@ -1,0 +1,21 @@
+{
+    "name": "webplumbr/elastic-blog",
+    "description": "ElasticSearch powered Blog bundle for Symfony 2 based Projects",
+    "license": "MIT",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php": ">=5.5",
+        "symfony/symfony": "2.*",
+        "webplumbr/elastic-blog": "dev-master",
+        "elasticsearch/elasticsearch": "~2.0@beta",
+        "erusev/parsedown": "1.5.3"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:webplumbr/elastic-blog.git"
+        }
+    ]
+}
