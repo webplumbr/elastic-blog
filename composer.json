@@ -8,9 +8,9 @@
     "require": {
         "php": ">=5.5",
         "symfony/symfony": "2.*",
-        "webplumbr/elastic-blog": "dev-master",
         "elasticsearch/elasticsearch": "~2.0@beta",
-        "erusev/parsedown": "1.5.3"
+        "erusev/parsedown": "1.5.3",
+        "webplumbr/elastic-blog": "dev-master"
     },
     "repositories": [
         {
