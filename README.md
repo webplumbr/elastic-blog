@@ -132,7 +132,14 @@ app/console assetic:dump
 app/console assets:install --symlink
 ```
 
-**Step 9.** You can then visit the following link and login using the default super admin user credentials:
+**Step 9.** Add the following to the file _/etc/elasticsearch/elasticsearch.yml_
+
+```
+http.max_initial_line_length: 1mb
+http.max_content_length: 10mb
+```
+
+**Step 10.** You can then visit the following link and login using the default super admin user credentials:
 
 ```
 username: superman
@@ -143,7 +150,7 @@ password: !underwear!
 
 [Local development box](http://your-project-name/app_dev.php/admin/login)
 
-**Step 10.** Import your Wordpress XML by visiting the "Import Wordpress Blog" link after logging in to the Admin area.
+**Step 11.** Import your Wordpress XML by visiting the "Import Wordpress Blog" link after logging in to the Admin area.
 
 If everything goes well, you should see your wordpress blog posts, tags, comments and users successfully migrated to the ElasticSearch powered blog platform.
 
