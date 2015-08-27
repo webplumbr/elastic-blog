@@ -10,6 +10,7 @@ Before you jump in, please read the following:
 1. Ability to grab associated media assets (video/image/attachments) from your Wordpress XML and save them locally (what this means:
 you won't be able to migrate your media assets yet to this platform)
 2. Presently does not preserve your Wordpress categories and pages (what this means: your wordpress categories and pages won't be imported)
+3. Write PHPunit test cases
 
 ## Requirements
 1. PHP version 5.5 or above
