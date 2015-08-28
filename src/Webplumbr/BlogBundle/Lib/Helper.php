@@ -16,7 +16,7 @@ class Helper
         $ns  = $xml->getNamespaces(true);
         //ns usually contains four namespaces (wp, dc, content and excerpt)
 
-        $posts = $comments = $users = $meta = array();
+        $posts = $comments = $users = $meta = $links = array();
 
         if (isset($xml->channel) && count($xml->channel->item) > 0) {
 
@@ -60,6 +60,15 @@ class Helper
                         'user_id'        => (integer) $this->getUserIdForUsername( (string) $node->children($ns['dc'])->creator , $users)
                     );
 
+                    //extract asset links
+                    if (preg_match_all('#('. $meta['url'] .'/[^\s\'"]+)#', $post['content'], $match)) {
+                        if (isset($match[1]) && count($match[1]) > 0) {
+                            foreach ($match[1] as $m) {
+                                $links[] = $m;
+                            }
+                        }
+                    }
+
                     //collect tags
                     $tags = array();
                     foreach ($node->category as $cat) {
@@ -96,7 +105,7 @@ class Helper
 
         unset($xml); //clear memory
 
-        return array('posts' => $posts, 'comments' => $comments, 'users' => $users, 'meta' => $meta);
+        return array('posts' => $posts, 'comments' => $comments, 'users' => $users, 'meta' => $meta, 'links' => $links);
     }
 
     public function getElapsedTime($timeOfInterest)

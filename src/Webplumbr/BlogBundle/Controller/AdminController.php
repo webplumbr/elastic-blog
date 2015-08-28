@@ -129,6 +129,11 @@ class AdminController extends Controller
                         }
                     }
 
+                    //fetch assets
+                    if (count($data['links']) > 0) {
+                        //@todo call symfony2 console to fetch and populate the assets to uploads folder
+                    }
+
                 } else {
                     $warnings[] = 'Unable to process any Posts';
                 }
