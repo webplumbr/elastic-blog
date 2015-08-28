@@ -409,6 +409,17 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/admin/spam/delete", name="delete_spam")
+     *
+     */
+    public function deleteSpamAction()
+    {
+        $this->get('elasticsearch')->deleteCommentsMarkedAsSpam();
+        $this->get('session')->getFlashBag()->set('notice', 'Spam comments have been deleted');
+        return $this->redirect($this->generateUrl('listing_comments'));
+    }
+
+    /**
      * @Route("/admin/dashboard", name="admin_dashboard")
      * @Template()
      *

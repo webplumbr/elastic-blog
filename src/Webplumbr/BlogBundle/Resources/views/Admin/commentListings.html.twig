@@ -6,20 +6,23 @@
     {% for message in app.session.flashbag.get('notice') %}
         <div class="alert-success alert">{{ message }}</div>
     {% endfor %}
-    {% if comments.total is defined %}
+    {% if comments.total > 0 %}
         <div class="alert-info alert">There are {{ comments.total }} Comments</div>
-    {% endif %}
-    {% for comment in comments.comments %}
-        <p>
-            <span class="label label-info">{{ comment.status }}</span>&nbsp;
-            <em>{{ comment.comment_date }}</em>, <strong>{{ comment.commenter }}</strong> said:<br/>
-            <span class="quote">{{ comment.content }}</span>
-            <a href="{{ path('edit_comment', {'id' : comment.comment_id }) }}" class="btn btn-link">Edit</a>
-            {% if comment.status == 'unapproved' %}
-            <a href="{{ path('approve_comment', {'id' : comment.comment_id }) }}" class="btn btn-link">Approve</a>
-            {% endif %}
+        <p class="text-right">
+            <a href="{{ url('delete_spam') }}" title="Delete comments marked as Spam" class="btn btn-warning">Delete Spam comments</a>
         </p>
-    {% endfor %}
+        {% for comment in comments.comments %}
+            <p>
+                <span class="label label-info">{{ comment.status }}</span>&nbsp;
+                <em>{{ comment.comment_date }}</em>, <strong>{{ comment.commenter }}</strong> said:<br/>
+                <span class="quote">{{ comment.content }}</span>
+                <a href="{{ path('edit_comment', {'id' : comment.comment_id }) }}" class="btn btn-link">Edit</a>
+                {% if comment.status == 'unapproved' %}
+                    <a href="{{ path('approve_comment', {'id' : comment.comment_id }) }}" class="btn btn-link">Approve</a>
+                {% endif %}
+            </p>
+        {% endfor %}
+    {% endif %}
 
     {% if prev_uri is defined or next_uri is defined %}
         <nav>

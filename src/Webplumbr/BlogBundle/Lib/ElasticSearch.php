@@ -796,9 +796,9 @@ class ElasticSearch
     {
         //simple spam filter
         $status = 'unapproved';
-        if (preg_match_all('#(http://\w+)#', $comment['content'], $match)) {
-            if (isset($match[1]) && count($match[1]) > 2) {
-                //if more than two hyperlinks have been provided then classify it as SPAM
+        if (preg_match_all('#(https?://\w+)#', $comment['content'], $match)) {
+            if (isset($match[1]) && count($match[1]) >= 2) {
+                //if more than or two hyperlinks have been provided then classify it as *potential* SPAM
                 $status = 'spam';
             }
         }
@@ -911,6 +911,63 @@ class ElasticSearch
         return $item;
     }
 
+    public function deleteCommentsMarkedAsSpam()
+    {
+        //iterate through search results and delete matching spam comments
+        $results = $this->getClient()->search(array(
+            'search_type' => 'scan',
+            'scroll'      => '30s', //a wait of 30 seconds between each scroll request
+            'size'        => 50,
+            'index'       => $this->getIndex(),
+            'type'        => self::TYPE_COMMENT,
+            'body'        => array(
+                'query' => array(
+                    'match' => array(
+                        'status' => 'spam'
+                    )
+                )
+            )
+        ));
+
+        //get scrolling identifier
+        $scrollId = $results['_scroll_id'];
+
+        //collect document ids and matching tags as key=value pairs
+        $ids = array();
+
+        while(true) {
+
+            try {
+                $resp = $this->getClient()->scroll(
+                    array(
+                        'scroll_id' => $scrollId,
+                        'scroll'    => '30s'
+                    ));
+            } catch (Missing404Exception $e) {
+                break;
+            }
+
+            if (count($resp['hits']['hits']) > 0) {
+                //update tag info
+                foreach ($resp['hits']['hits'] as $hit) {
+                    $ids[] = $hit['_id'];
+                }
+            } else {
+                //when there are no results - break out of the loop
+                break;
+            }
+        }
+
+        //delete documents
+        foreach ($ids as $id) {
+            $this->getClient()->delete(array(
+                'index' => $this->getIndex(),
+                'type'  => self::TYPE_COMMENT,
+                'id'    => $id
+            ));
+        }
+    }
+
     private function getMonthName($key)
     {
         //if your language is other than English - change this array
@@ -963,5 +1020,4 @@ class ElasticSearch
     {
         return $this->getNextInsertId(self::TYPE_USER, 'user_id');
     }
-
 }
