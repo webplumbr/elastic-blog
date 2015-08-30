@@ -88,7 +88,8 @@ class AdminController extends Controller
         $warnings = $notices = array();
 
         if ($request->isMethod('post')) {
-            set_time_limit(600);
+            //max execution time set to 30 minutes
+            set_time_limit(1800);
 
             $file = $request->files->get('filename');
             if ($file instanceof UploadedFile && $file->getMimeType() !== 'text/xml') {
@@ -129,9 +130,13 @@ class AdminController extends Controller
                         }
                     }
 
-                    //fetch assets
+                    //fetch assets - triggers an asynchronous process
                     if (count($data['links']) > 0) {
-                        //@todo call symfony2 console to fetch and populate the assets to uploads folder
+                        try {
+                            $this->get('retrieve_assets')->fetch($data['links']);
+                        } catch (\RuntimeException $e) {
+                            $warnings[] = $e->getMessage();
+                        }
                     }
 
                 } else {

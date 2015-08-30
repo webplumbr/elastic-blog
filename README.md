@@ -7,14 +7,13 @@ blog posts and associated users, tags, comments as JSON documents within Elastic
 Before you jump in, please read the following:
 
 ## To do
-1. Ability to grab associated media assets (video/image/attachments) from your Wordpress XML and save them locally (what this means:
-you won't be able to migrate your media assets yet to this platform)
-2. Presently does not preserve your Wordpress categories and pages (what this means: your wordpress categories and pages won't be imported)
-3. Write PHPunit test cases
+1. Presently does not preserve your Wordpress categories and pages (what this means: your wordpress categories and pages won't be imported)
+2. Write PHPunit test cases
 
 ## Requirements
 1. PHP version 5.5 or above
-2. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version >= 1.0
+2. Symfony 2.3 LTS or above with its default set of vendor bundles (out of box)
+3. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version >= 1.0
 
 **Step 1.** Add the following package to your _composer.json_
 

@@ -21,6 +21,7 @@
         <parameter key="helper.class">Webplumbr\BlogBundle\Lib\Helper</parameter>
         <parameter key="kernelRequestListener.class">Webplumbr\BlogBundle\EventListener\KernelRequestListener</parameter>
         <parameter key="kernelExceptionListener.class">Webplumbr\BlogBundle\EventListener\KernelExceptionListener</parameter>
+        <parameter key="retrieve_assets.class">Webplumbr\BlogBundle\Lib\RetrieveAssets</parameter>
     </parameters>
     <services>
         <service id="app.twig_extension"
@@ -59,6 +60,9 @@
         </service>
         <service id="elastic_user_provider" class="%elasticUserProvider.class%">
             <argument type="service" id="elasticsearch"></argument>
+        </service>
+        <service id="retrieve_assets" class="%retrieve_assets.class%">
+            <argument type="service" id="service_container"></argument>
         </service>
     </services>
 </container>
