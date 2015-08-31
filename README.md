@@ -16,6 +16,12 @@ Before you jump in, please read the following:
 2. Symfony 2.3 LTS or above with its default set of vendor bundles (out of box)
 3. [ElasticSearch](https://www.elastic.co/downloads/elasticsearch) version >= 1.0
 
+## Demo
+[Blog migrated from Wordpress](http://prophecy.webplumbr.com/)
+
+
+## Installation & Configuration
+
 **Step 1.** Add the following package to your _composer.json_
 
 ```
