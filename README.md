@@ -7,8 +7,9 @@ blog posts and associated users, tags, comments as JSON documents within Elastic
 Before you jump in, please read the following:
 
 ## To do
-1. Presently does not preserve your Wordpress categories and pages (what this means: your wordpress categories and pages won't be imported)
-2. Write PHPunit test cases
+1. Presently does not preserve your Wordpress categories and pages (what this means: your wordpress categories and pages can't be imported)
+2. Password change functionality for users
+3. Write PHPunit test cases
 
 ## Requirements
 1. PHP version 5.5 or above
@@ -19,7 +20,7 @@ Before you jump in, please read the following:
 
 ```
 require {
-  "webplumbr/elastic-blog": "dev-master"
+  "webplumbr/elastic-blog": "v0.6"
 }
 ```
 
@@ -54,6 +55,8 @@ assetic:
     # import using your existing Wordpress Blog XML
     default_user_password: '!letmein!'
 ```
+
+**NOTE** Remember to change the _default_user_password_ and _secret_ parameters to suit yours.
 
 Run the following to grab the above parameters
 
@@ -139,26 +142,30 @@ http.max_initial_line_length: 1mb
 http.max_content_length: 10mb
 ```
 
-**Step 10.** You can then visit the following link and login using the default super admin user credentials:
+**Step 10.** The default super admin user credentials to login the first time unless you have modified the user credentials in
+_app/config/security.yml_ to something else.
 
 ```
 username: superman
 password: !underwear!
 ```
 
-[Login page](http://your-project-domain/admin/login)
+**Step 11.** You can try the following to print the available routes offered by this bundle
 
-[Local development box](http://your-project-name/app_dev.php/admin/login)
+```
+app/console router:debug
+```
 
-**Step 11.** Import your Wordpress XML by visiting the "Import Wordpress Blog" link after logging in to the Admin area.
+**Step 12.** Import your Wordpress XML by visiting the "Import Wordpress Blog" link after logging in to the Admin area.
 
 If everything goes well, you should see your wordpress blog posts, tags, comments and users successfully migrated to the ElasticSearch powered blog platform.
 
 ## FAQ
 If you have any issues, make sure you have checked the following:
 
-1. Is Elasticsearch installed and running as a service?
+1. Is Elasticsearch installed and running as a Service?
 2. Does Symfony 2 have required permissions to write to app/cache and/or app/logs folders?
 3. Have you cleared Symfony 2 cache folder?
 4. Have other installation dependencies outside of this bundle been met with?
 5. If you get "no matching package found" error when using _composer_ _update_, then change your Project root level _composer.json_ 's minimum stability to "dev"
+6. If you get "No alive nodes found" or "Empty server" exceptions, then make sure you made changes as per Step 9.
