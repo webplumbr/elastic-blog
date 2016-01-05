@@ -32,16 +32,20 @@
 </div>
 
 <div class="container-fluid">
-    <div class="blog-header">
-        <h2 class="blog-title">{{ blog_title }}</h2>
-        <p class="lead blog-description">{{ blog_subtitle }}</p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="blog-header">
+                <h2 class="blog-title">{{ blog_title }}</h2>
+                <p class="lead blog-description">{{ blog_subtitle }}</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="container-fluid">
     <div class="row">
         {% block body %}{% endblock %}
-        <div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-1 blog-sidebar">
+        <div class="col-xs-12 col-sm-12 col-md-3 blog-sidebar">
             <div class="sidebar-module">
                 <h4>Search Archives</h4>
                 <form action="{{ url('posts_search') }}" method="get">
