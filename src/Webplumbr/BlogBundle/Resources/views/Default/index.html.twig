@@ -1,8 +1,7 @@
 {% extends 'WebplumbrBlogBundle:Default:blog.html.twig' %}
 
 {% block body %}
-    <div class="col-sm-8 blog-main">
-
+    <div class="col-xs-12 col-sm-7 col-md-8 blog-main">
         {% if posts %}
             {% for post in posts.posts %}
                 <div class="blog-post">
@@ -32,6 +31,5 @@
                 </ul>
             </nav>
         {% endif %}
-
     </div><!-- /.blog-main -->
 {% endblock %}

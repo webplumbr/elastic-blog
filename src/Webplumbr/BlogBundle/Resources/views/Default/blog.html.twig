@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="blog-masthead">
-    <div class="container">
+    <div class="container-fluid">
         <nav class="blog-nav">
             <a class="blog-nav-item active" href=" {{ url('blog_index') }}">Home</a>
             <a class="blog-nav-item" href="{{ url('about') }}">About</a>
@@ -31,24 +31,20 @@
     </div>
 </div>
 
-<div class="container">
-
+<div class="container-fluid">
     <div class="blog-header">
         <h2 class="blog-title">{{ blog_title }}</h2>
         <p class="lead blog-description">{{ blog_subtitle }}</p>
     </div>
+</div>
 
+<div class="container-fluid">
     <div class="row">
-
         {% block body %}{% endblock %}
-
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-            <div class="sidebar-module sidebar-module-inset">
-                <h4>About</h4>
-                <p>Add something about yourself</p>
-            </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-md-offset-1 blog-sidebar">
             <div class="sidebar-module">
-                <form class="" action="{{ url('posts_search') }}" method="get">
+                <h4>Search Archives</h4>
+                <form action="{{ url('posts_search') }}" method="get">
                     <input type="text" name="query" class="form-control" placeholder="Search Posts...">
                 </form>
             </div>
@@ -72,6 +68,10 @@
                     </ol>
                 {% endif %}
             </div>
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p>Add something about yourself</p>
+            </div>
             <!--
             <div class="sidebar-module">
                 <h4>Elsewhere</h4>
@@ -90,9 +90,7 @@
 
 <footer class="blog-footer">
     <p>&copy; Webplumbr - 2007 till date</p>
-    <p>
-        <a href="#">Back to top</a>
-    </p>
+    <p><a href="#">Back to top</a></p>
 </footer>
 
 <!-- placed towards the end to help load the page faster -->
