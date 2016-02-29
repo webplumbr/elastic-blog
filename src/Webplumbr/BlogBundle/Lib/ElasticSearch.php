@@ -911,6 +911,67 @@ class ElasticSearch
         return $item;
     }
 
+    public function markUnapprovedCommentsAsSpam()
+    {
+        //fetching Posts matching the specified tag
+        //iterate through search results and then unPublish them
+        $results = $this->getClient()->search(array(
+            'search_type' => 'scan',
+            'scroll'      => '30s', //a wait of 30 seconds between each scroll request
+            'size'        => 50,
+            'index'       => $this->getIndex(),
+            'type'        => self::TYPE_COMMENT,
+            'body'        => array(
+                'query' => array(
+                    'match' => array(
+                        'status' => 'unapproved'
+                    )
+                )
+            )
+        ));
+
+        //get scrolling identifier
+        $scrollId = $results['_scroll_id'];
+
+        //collect matching document ids
+        $ids = array();
+
+        while(true) {
+
+            try {
+                $resp = $this->getClient()->scroll(
+                    array(
+                        'scroll_id' => $scrollId,
+                        'scroll'    => '30s'
+                    ));
+            } catch (Missing404Exception $e) {
+                break;
+            }
+
+            if (count($resp['hits']['hits']) > 0) {
+                //update tag info
+                foreach ($resp['hits']['hits'] as $hit) {
+                    $ids[] = $hit['_id'];
+                }
+            } else {
+                //when there are no results - break out of the loop
+                break;
+            }
+        }
+
+        //update the comment status
+        foreach ($ids as $id) {
+            $this->getClient()->update(array(
+                'index' => $this->getIndex(),
+                'type'  => self::TYPE_COMMENT,
+                'id'    => $id,
+                //for some reason, ElasticSearch does not like array keys that are non-sequential
+                //hence this array_values approach to ensure the elements have ordered keys
+                'body'  => array('doc' => array('status' => 'spam'))
+            ));
+        }
+    }
+
     public function deleteCommentsMarkedAsSpam()
     {
         //iterate through search results and delete matching spam comments

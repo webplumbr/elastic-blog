@@ -9,7 +9,8 @@
     {% if comments.total > 0 %}
         <div class="alert-info alert">There are {{ comments.total }} Comments</div>
         <p class="text-right">
-            <a href="{{ url('delete_spam') }}" title="Delete comments marked as Spam" class="btn btn-warning">Delete Spam comments</a>
+            <a href="{{ url('mark_as_spam') }}" title="Mark unapproved comments as Spam" class="btn btn-warning">Mark unapproved comments as Spam</a>
+            <a href="{{ url('delete_spam') }}" title="Delete comments marked as Spam" class="btn btn-danger">Delete Spam comments</a>
         </p>
         {% for comment in comments.comments %}
             <p>

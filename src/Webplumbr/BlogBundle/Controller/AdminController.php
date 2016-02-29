@@ -419,6 +419,17 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/admin/comment/mark-as-spam", name="mark_as_spam")
+     *
+     */
+    public function markAsSpamAction()
+    {
+        $this->get('elasticsearch')->markUnapprovedCommentsAsSpam();
+        $this->get('session')->getFlashBag()->set('notice', 'Unapproved comments have been marked as Spam');
+        return $this->redirect($this->generateUrl('listing_comments'));
+    }
+
+    /**
      * @Route("/admin/spam/delete", name="delete_spam")
      *
      */
